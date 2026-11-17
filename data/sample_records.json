@@ -1,38 +1,51 @@
 [
   {
     "id": "001",
-    "company": "",
-    "document_type": "",
-    "filing_date": "",
-    "fresh_issue_cr": "",
-    "ofs_cr": "",
-    "objects": "",
-    "revenue": "",
-    "profit": "",
-    "promoter_holding": ""
+    "company": "Sarva Foam Industries Limited",
+    "document_type": "DRHP",
+    "filing_date": "September 30, 2026",
+    "fresh_issue_cr": null,
+    "ofs_cr": 1350000,
+    "objects": [
+      "Funding capital expenditure for setting up a new manufacturing facility for Rebonded Polyurethane foam products",
+      "Repayment or prepayment, in full or in part, of certain outstanding borrowings",
+      "General corporate purposes"
+    ],
+    "revenue": 206.12,
+    "profit": 17.65,
+    "promoter_holding": null
   },
   {
     "id": "002",
-    "company": "",
-    "document_type": "",
-    "filing_date": "",
-    "fresh_issue_cr": "",
-    "ofs_cr": "",
-    "objects": "",
-    "revenue": "",
-    "profit": "",
-    "promoter_holding": ""
+    "company": "Maharashtra Oil Extractions Limited",
+    "document_type": "DRHP",
+    "filing_date": "September 13, 2026",
+    "fresh_issue_cr": 370,
+    "ofs_cr": 21428571,
+    "objects": [
+      "Financing modernisation and upgradation of Nandurbar Manufacturing Facility",
+      "Financing capital expenditure requirements at Dhule Manufacturing Facility (Capacity enhancement/refinery upgradation & Packaging Unit)",
+      "Financing modernisation and upgradation of Gangakhed Manufacturing Facility",
+      "Funding working capital requirements",
+      "General corporate purposes"
+    ],
+    "revenue": 2211.54,
+    "profit": 86.22,
+    "promoter_holding": null
   },
   {
     "id": "003",
-    "company": "",
-    "document_type": "",
-    "filing_date": "",
-    "fresh_issue_cr": "",
-    "ofs_cr": "",
-    "objects": "",
-    "revenue": "",
-    "profit": "",
-    "promoter_holding": ""
+    "company": "Iris Global Services Limited",
+    "document_type": "DRHP",
+    "filing_date": "September 21, 2026",
+    "fresh_issue_cr": 200,
+    "ofs_cr": 50000000,
+    "objects": [
+      "Funding working capital requirements of the Company",
+      "General corporate purposes"
+    ],
+    "revenue": 4156.44,
+    "profit": 79.49,
+    "promoter_holding": null
   }
 ]
