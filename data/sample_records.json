@@ -20,7 +20,7 @@
     "company": "Maharashtra Oil Extractions Limited",
     "document_type": "DRHP",
     "filing_date": "September 13, 2026",
-    "fresh_issue_cr": 370,
+    "fresh_issue_cr": 370.0,
     "ofs_cr": 21428571,
     "objects": [
       "Financing modernisation and upgradation of Nandurbar Manufacturing Facility",
@@ -38,7 +38,7 @@
     "company": "Iris Global Services Limited",
     "document_type": "DRHP",
     "filing_date": "September 21, 2026",
-    "fresh_issue_cr": 200,
+    "fresh_issue_cr": 200.0,
     "ofs_cr": 50000000,
     "objects": [
       "Funding working capital requirements of the Company",
@@ -47,5 +47,273 @@
     "revenue": 4156.44,
     "profit": 79.49,
     "promoter_holding": null
+  },
+  {
+    "id": "004",
+    "company": "Hyundai Motor India Limited",
+    "document_type": "DRHP",
+    "filing_date": "June 15, 2024",
+    "fresh_issue_cr": null,
+    "ofs_cr": 142194700,
+    "objects": [
+      "Achieving the benefits of listing the Equity Shares on the Stock Exchanges",
+      "Carry out the Offer for Sale of up to 142,194,700 Equity Shares by the Promoter Selling Shareholder"
+    ],
+    "revenue": 69829.40,
+    "profit": 6060.60,
+    "promoter_holding": 100.0
+  },
+  {
+    "id": "005",
+    "company": "Swiggy Limited",
+    "document_type": "DRHP",
+    "filing_date": "September 26, 2024",
+    "fresh_issue_cr": 3750.0,
+    "ofs_cr": 185333149,
+    "objects": [
+      "Funding investment in material subsidiary, Scootsy, for expansion of dark store network",
+      "Investment in technology and cloud infrastructure",
+      "Brand marketing and business promotion expenses",
+      "Funding inorganic growth through unidentified acquisitions and general corporate purposes"
+    ],
+    "revenue": 11247.39,
+    "profit": -2350.24,
+    "promoter_holding": null
+  },
+  {
+    "id": "006",
+    "company": "NTPC Green Energy Limited",
+    "document_type": "DRHP",
+    "filing_date": "September 18, 2024",
+    "fresh_issue_cr": 10000.0,
+    "ofs_cr": null,
+    "objects": [
+      "Investment in subsidiary, NTPC Renewable Energy Limited, for repayment or prepayment, in full or in part, of certain outstanding borrowings",
+      "General corporate purposes"
+    ],
+    "revenue": 1962.60,
+    "profit": 344.72,
+    "promoter_holding": 100.0
+  },
+  {
+    "id": "007",
+    "company": "Aether Industries Limited",
+    "document_type": "DRHP",
+    "filing_date": "October 20, 2021",
+    "fresh_issue_cr": 627.0,
+    "ofs_cr": 2820000,
+    "objects": [
+      "Funding capital expenditure requirements for greenfield project",
+      "Funding working capital requirements",
+      "General corporate purposes"
+    ],
+    "revenue": 450.12,
+    "profit": 82.85,
+    "promoter_holding": 96.95
+  },
+  {
+    "id": "008",
+    "company": "Tata Technologies Limited",
+    "document_type": "DRHP",
+    "filing_date": "March 09, 2023",
+    "fresh_issue_cr": null,
+    "ofs_cr": 95715102,
+    "objects": [
+      "Achieve the benefits of listing the Equity Shares on the Stock Exchanges",
+      "Carry out the Offer for Sale of up to 95,715,102 Equity Shares"
+    ],
+    "revenue": 4414.18,
+    "profit": 624.03,
+    "promoter_holding": 74.69
+  },
+  {
+    "id": "009",
+    "company": "Mamaearth (Honasa Consumer Limited)",
+    "document_type": "DRHP",
+    "filing_date": "December 29, 2022",
+    "fresh_issue_cr": 400.0,
+    "ofs_cr": 46819635,
+    "objects": [
+      "Funding advertisement expenses towards enhancing the visibility and awareness of our brands",
+      "Capital expenditure to be incurred by the Company for setting up new exclusive brand outlets",
+      "Investment in our subsidiary, BBlunt, for setting up new salons",
+      "General corporate purposes"
+    ],
+    "revenue": 943.46,
+    "profit": 14.44,
+    "promoter_holding": 38.88
+  },
+  {
+    "id": "010",
+    "company": "IKIO Lighting Limited",
+    "document_type": "DRHP",
+    "filing_date": "January 03, 2023",
+    "fresh_issue_cr": 350.0,
+    "ofs_cr": 7500000,
+    "objects": [
+      "Repayment/prepayment, in full or in part, of certain borrowings availed by the company and its subsidiaries",
+      "Investment in subsidiary, IKIO Solutions Private Limited, for setting up a new facility at Noida",
+      "General corporate purposes"
+    ],
+    "revenue": 331.84,
+    "profit": 50.52,
+    "promoter_holding": 100.0
+  },
+  {
+    "id": "011",
+    "company": " Mankind Pharma Limited",
+    "document_type": "DRHP",
+    "filing_date": "September 16, 2022",
+    "fresh_issue_cr": null,
+    "ofs_cr": 40058844,
+    "objects": [
+      "Achieve the benefits of listing the Equity Shares on the Stock Exchanges",
+      "Carry out the Offer for Sale of up to 40,058,844 Equity Shares by the Selling Shareholders"
+    ],
+    "revenue": 7781.53,
+    "profit": 1453.37,
+    "promoter_holding": 79.45
+  },
+  {
+    "id": "012",
+    "company": "Zaggle Prepaid Ocean Services Limited",
+    "document_type": "DRHP",
+    "filing_date": "December 22, 2022",
+    "fresh_issue_cr": 392.0,
+    "ofs_cr": 10448336,
+    "objects": [
+      "Customer acquisition and retention",
+      "Expenditure towards developing technology and products",
+      "Payment of debt availed by the company",
+      "General corporate purposes"
+    ],
+    "revenue": 553.47,
+    "profit": 22.90,
+    "promoter_holding": 73.18
+  },
+  {
+    "id": "013",
+    "company": "Yatra Online Limited",
+    "document_type": "DRHP",
+    "filing_date": "March 25, 2022",
+    "fresh_issue_cr": 750.0,
+    "ofs_cr": 11088441,
+    "objects": [
+      "Strategic investments and inorganic growth",
+      "Investment in customer acquisition and retention, organic growth and general corporate purposes"
+    ],
+    "revenue": 157.06,
+    "profit": -30.76,
+    "promoter_holding": null
+  },
+  {
+    "id": "014",
+    "company": "Concord Biotech Limited",
+    "document_type": "DRHP",
+    "filing_date": "April 08, 2022",
+    "fresh_issue_cr": null,
+    "ofs_cr": 20925654,
+    "objects": [
+      "Achieve the benefits of listing the Equity Shares on the Stock Exchanges",
+      "Carry out the Offer for Sale of up to 20,925,654 Equity Shares by the Selling Shareholder"
+    ],
+    "revenue": 713.83,
+    "profit": 174.93,
+    "promoter_holding": 80.05
+  },
+  {
+    "id": "015",
+    "company": "Jio Financial Services Limited",
+    "document_type": "DRHP",
+    "filing_date": "July 07, 2023",
+    "fresh_issue_cr": null,
+    "ofs_cr": null,
+    "objects": [
+      "To carry on the business of non-banking financial institutions and financial services as approved by regulatory bodies"
+    ],
+    "revenue": null,
+    "profit": null,
+    "promoter_holding": 47.12
+  },
+  {
+    "id": "016",
+    "company": "Tata Play Limited",
+    "document_type": "DRHP",
+    "filing_date": "December 02, 2022",
+    "fresh_issue_cr": 500.0,
+    "ofs_cr": 35600000,
+    "objects": [
+      "Achieve the benefits of listing the Equity Shares on the Stock Exchanges",
+      "Carry out the Offer for Sale of Equity Shares by the selling shareholders"
+    ],
+    "revenue": 4710.55,
+    "profit": -104.77,
+    "promoter_holding": 70.0
+  },
+  {
+    "id": "017",
+    "company": "Go Airlines (India) Limited",
+    "document_type": "DRHP",
+    "filing_date": "July 06, 2021",
+    "fresh_issue_cr": 3600.0,
+    "ofs_cr": null,
+    "objects": [
+      "Repayment or prepayment, in full or in part, of certain outstanding borrowings",
+      "Replacement of letters of credit, issued in favor of certain aircraft lessors",
+      "Payment of dues to certain aircraft lessors",
+      "General corporate purposes"
+    ],
+    "revenue": 2690.43,
+    "profit": -1347.41,
+    "promoter_holding": 99.99
+  },
+  {
+    "id": "018",
+    "company": "EbixCash Limited",
+    "document_type": "DRHP",
+    "filing_date": "March 10, 2022",
+    "fresh_issue_cr": 6000.0,
+    "ofs_cr": null,
+    "objects": [
+      "Funding working capital requirements of our subsidiaries, Ebix Travels Private Limited and Ebix Cash World Money Limited",
+      "Purchase of commercial premises",
+      "Payment of financial indebtedness availed by subsidiaries",
+      "General corporate purposes"
+    ],
+    "revenue": 4857.00,
+    "profit": 230.13,
+    "promoter_holding": 100.0
+  },
+  {
+    "id": "019",
+    "company": "Fabindia Limited",
+    "document_type": "DRHP",
+    "filing_date": "April 13, 2022",
+    "fresh_issue_cr": 500.0,
+    "ofs_cr": 25050543,
+    "objects": [
+      "Voluntary prepayment or repayment of all or a portion of certain borrowings availed by the company",
+      "Payment of incentives to eligible artisans and farmers",
+      "General corporate purposes"
+    ],
+    "revenue": 1548.81,
+    "profit": -39.02,
+    "promoter_holding": 50.12
+  },
+  {
+    "id": "020",
+    "company": "Oravel Stays Limited (OYO)",
+    "document_type": "DRHP",
+    "filing_date": "October 01, 2021",
+    "fresh_issue_cr": 8430.0,
+    "ofs_cr": 1430000000,
+    "objects": [
+      "Repayment and/or prepayment of all or a portion of certain borrowings availed by certain subsidiaries",
+      "Funding organic and inorganic growth initiatives",
+      "General corporate purposes"
+    ],
+    "revenue": 3964.65,
+    "profit": -3943.84,
+    "promoter_holding": 47.38
   }
 ]
