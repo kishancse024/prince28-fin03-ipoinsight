@@ -66,3 +66,64 @@ Additionally, when a table is extremely small, the overhead of looking up index 
 **When would it switch to the GIN index? (1 line)**
 
 It will switch to the GIN index once the table grows large enough that filtering out rows sequentially becomes more expensive than index traversal.
+
+
+
+## D04 · Docker, Compose and tests
+
+### The image
+
+```text
+paste the output of: docker images ipoinsight:dev
+IMAGE            ID             DISK USAGE   CONTENT SIZE   EXTRA
+ipoinsight:dev   d1df031f07f2        300MB           70MB
+paste the output of: docker run --rm ipoinsight:dev id
+uid=999(app) gid=999(app) groups=999(app)
+```
+
+- Size: 300MB (target: under 400 MB)
+- First build: ___ s. After changing one line of code: ___ s.
+- Which step said CACHED, and why? (1 line, your own words)
+
+### The stack
+
+```text
+paste the output of: docker compose ps -a
+NAME                   IMAGE                    COMMAND                  SERVICE   CREATED          STATUS                             PORTS
+ipoinsight-api-1       ipoinsight-api           "sh -c 'exec uvicorn…"   api       46 seconds ago   Up 11 seconds (health: starting)   0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
+ipoinsight-db-1        pgvector/pgvector:pg17   "docker-entrypoint.s…"   db        55 seconds ago   Up 41 seconds (healthy)            0.0.0.0:5433->5432/tcp, [::]:5433->5432/tcp
+ipoinsight-migrate-1   ipoinsight-migrate       "sh -c 'alembic upgr…"   migrate   48 seconds ago   Exited (0) 14 seconds ago
+ipoinsight-redis-1     redis:7-alpine           "docker-entrypoint.s…"   redis     55 seconds ago   Up 42 seconds (healthy)            0.0.0.0:6379->6379/tcp, [::]:6379->6379/tcp
+paste the last line of: docker compose logs migrate   (first up, then after down + up)
+migrate-1  | records=20 inserted=20 updated=0 unchanged=0
+```
+
+### Breaking the database on purpose
+
+```text
+db stopped:  /health → {"status":"ok","app":"ipoinsight","env":"local"}
+db stopped:  /ready  → {"status":"not_ready","checks":{"database":false}}
+db started:  /ready  → {"status":"ready","checks":{"database":true}}
+```
+
+Why should a load balancer stop sending traffic here but not restart the app? (2 lines)
+The readiness check indicates whether the application can serve requests, including whether its database dependency is available. If the database is down, the load balancer should temporarily stop routing traffic to the application. The application itself should remain running so it can recover when the database becomes available.
+
+### Tests and coverage
+
+```text
+uv run poe test              → 16 passed in 6.32s
+uv run poe test-integration  → 7 passed in 23.40s
+coverage TOTAL, unit only    → 254     36     26      2    83%
+coverage TOTAL, with integration tests → TOTAL                                254     36     26      2    83%
+
+9 files skipped due to complete coverage.
+16 passed, 7 skipped in 25.80s
+```
+
+Two files or lines my coverage report says are never run, and whether they matter: (2 lines)
+
+
+src/ipoinsight/db/repository.py — 27% coverage. Important because database repository operations may not be tested.
+
+src/ipoinsight/api/deps.py — 64% coverage. Important if the missed lines handle authentication, authorization, or database dependencies.

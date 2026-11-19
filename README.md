@@ -53,3 +53,29 @@ uv run ruff check .
 Speed: "Adjusted full-answer latency target to 6 s to accommodate hybrid search and cross-encoder reranking across 400+ page DRHP documents without sacrificing citation accuracy."
 
  Cost: "Raised cost ceiling to Rs 1.25 per query to allow passing larger context windows (top-8 chunks) needed to accurately read multi-page financial tables in RHP filings."
+
+## Run locally in one command
+
+You need Docker Desktop running. From a fresh clone:
+
+```bash
+docker compose up --build
+```
+
+This starts Postgres (with pgvector), Redis, runs the migrations and loads the sample data once, then starts the API.
+
+- API docs: http://localhost:8000/docs
+- Liveness: http://localhost:8000/health
+- Readiness (checks the database): http://localhost:8000/ready
+
+Stop with `Ctrl+C`, then `docker compose down`. Add `-v` to also delete the database volume.
+
+## Develop and test
+
+| Task | Mac / Linux | Windows |
+|---|---|---|
+| Run the API with reload | `make dev` | `uv run poe dev` |
+| Unit tests (no network) | `make test` | `uv run poe test` |
+| Integration tests (needs `docker compose up`) | `make test-integration` | `uv run poe test-integration` |
+| Coverage report | `make cov` | `uv run poe cov` |
+| Lint and format check | `make lint` | `uv run poe lint` |
