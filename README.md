@@ -1,8 +1,14 @@
 # IPOInsight
+[![CI](https://github.com/kishancse024/prince28-fin03-ipoinsight/actions/workflows/ci.yml/badge.svg)](https://github.com/kishancse024/prince28-fin03-ipoinsight/actions/workflows/ci.yml)
+[![Live](https://img.shields.io/website?url=https%3A%2F%2Fipoinsight.onrender.com%2Fhealth&label=live)](https://ipoinsight.onrender.com/docs)
+[![Uptime (30 days)](https://img.shields.io/uptimerobot/ratio/m804746237-976e480f019dde8f7bc5e789)](https://ipoinsight.onrender.com/health)
+
+**Live:** https://ipoinsight.onrender.com · [API docs](https://ipoinsight.onrender.com/docs) · [health](https://ipoinsight.onrender.com/health)
+
 
 Explains an upcoming IPO from its offer document: offer for sale vs fresh issue, use of money, risks and financials, with page citations.
 
-**Status:** Day 1 foundation (FastAPI skeleton, quality gates). Live URL from Day 5.
+**Status:** Week 1 complete · live at https://ipoinsight.onrender.com
 
 ## Who it's for
 

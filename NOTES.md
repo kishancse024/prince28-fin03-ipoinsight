@@ -127,3 +127,35 @@ Two files or lines my coverage report says are never run, and whether they matte
 src/ipoinsight/db/repository.py — 27% coverage. Important because database repository operations may not be tested.
 
 src/ipoinsight/api/deps.py — 64% coverage. Important if the missed lines handle authentication, authorization, or database dependencies.
+
+## D05 · CI/CD and going live
+
+- Live URL: (paste)
+- CI run for pull request 1: https://github.com/kishancse024/prince28-fin03-ipoinsight/actions (paste the run link)
+- First deploy that ran by itself: (paste the CD run link)
+- Merge clicked at __:__ → "Smoke test passed" at __:__ → lead time: ___ min
+
+### Smoke test output from that CD run
+
+```text
+ok   /health -> 200, version 532724f37c6631db27e54698faf1fd940867c3f1
+ok   /ready -> 200 {'status': 'ready', 'checks': {'database': True}}
+ok   /v1/documents?limit=1 -> 200
+Smoke test passed
+```
+
+### Rollback drill
+
+- Rolled back to sha a15ad7909e4051e8fd92ba8fb7cc6832f0789b44 : started __:__, smoke passed __:__ (___ min)
+- Rolled forward to sha 2c082f77d94f27652d393d3f5eb63ffe12d7b1cb  : ___ min
+- During the rollback, the database stayed on the newer schema. Why is that safe here? (2 lines)
+
+### Where my secrets live
+
+- Neon string: GitHub Secret DATABASE_URL + Render environment. Not in Git, not in the image.
+- Render deploy hook: GitHub Secret RENDER_DEPLOY_HOOK only.
+
+### Monitoring
+
+- UptimeRobot checks /health every 5 minutes; alerts go to my email.
+- One thing that would make my live app faster on its first request: (1 line)
