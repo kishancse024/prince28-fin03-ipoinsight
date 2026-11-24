@@ -159,3 +159,43 @@ Smoke test passed
 
 - UptimeRobot checks /health every 5 minutes; alerts go to my email.
 - One thing that would make my live app faster on its first request: (1 line)
+
+
+## D06 · Collecting the corpus
+
+- Start target: 10 offer documents (about 4,000 pages)
+- Collected today: 8 files measured in CAPACITY.md (10 fetched in manifest), 3,360 pages, 78.3 MB (from DATASET.md / CAPACITY.md)
+- Doors used: URL list
+
+### Licence check
+
+| Source | Licence or terms, in my words | May I show full text in answers? |
+|---|---|---|
+| `sebi-gov-in` | Public offer documents and filings hosted by SEBI for public disclosure; cite page numbers and keep source attribution. | Short cited excerpts/summaries are fine for Q&A; avoid reproducing full filings and stick to page-cited snippets per project terms. |
+| `bseindia-com` | Public DRHP offer document hosted on BSE's corporate filing portal; cite page numbers. | Same—use cited excerpts/answers rather than reproducing full documents. |
+| `bofa-com` | Publicly linked DRHP PDF hosted by a book-running lead manager; cite page numbers. | Same—use cited excerpts/answers rather than reproducing full documents. |
+
+### robots.txt
+
+- Site: `investmentbank.kotak.com`. Its robots.txt says (2 lines): User-agent: *
+Allow: /
+
+Sitemap: https://investmentbank.kotak.com/sitemap/sitemap.xml
+- Was anything blocked for my bot? Yes—`https://investmentbank.kotak.com/downloads/honasa-consumer-limited-DRHP.pdf` was blocked by `robots.txt`. I respected the block and swapped to a SEBI filing page (`https://www.sebi.gov.in/filings/public-issues/dec-2022/honasa-consumer-limited-drhp_66770.html`) instead of scraping the blocked host.
+
+### Kill and resume
+
+- Run 1: I pressed Ctrl+C after 4 files
+- Run 2: downloaded=6 skipped=4
+- Run 3: downloaded=0 skipped=10
+
+### Capacity (from docs/CAPACITY.md)
+
+- Tokens per page, measured: 1,006
+- Full corpus: 15.09 M tokens, 43,381 chunks, embedding about Rs 247 ($2.60), vectors 133 MB
+- The number that surprised me most, and why (2 lines): Embedding the entire 15.09 M-token (43,381-chunk) corpus costs only about Rs 247 ($2.60) once, while vectors take 133 MB and Postgres text takes 72 MB.
+  I expected embedding and vector storage across 15,000 pages of offer documents to be much heavier on cost and disk space.
+
+### One thing that went wrong today, and how I fixed it
+
+`dataset_report.py` printed `nothing measurable yet` after downloading because the files on disk weren't sitting at the exact subfolder paths recorded in `data/manifest.jsonl` (`data/raw/<source>/...`) and a stale `.measured.json` cache existed. I verified the files with `pypdf`, moved them into their matching `data/raw/<source>/` folders, removed `.measured.json`, and re-ran `dataset_report.py`.
