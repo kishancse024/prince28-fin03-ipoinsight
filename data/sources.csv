@@ -1,0 +1,17 @@
+# Sources for IPOInsight. One row per file to download. Lines starting with # are notes.
+# Start target: 10 offer documents (about 4,000 pages)
+# Where to look:
+#   https://www.sebi.gov.in/sebiweb/home/HomeAction.do?doListing=yes&sid=3&ssid=15&smid=10
+#   https://www.sebi.gov.in/
+# Terms on my project card: Public SEBI filings. Cite page numbers.
+url,source,licence,title
+https://www.sebi.gov.in/sebi_data/commondocs/sep-2026/Maharashtra%20Oil%20Extractions%20Limited%20-%20DAP_p.pdf,sebi-gov-in,"Public SEBI filing","Maharashtra Oil Extractions Limited - DAP (Sep 13, 2026)"
+https://www.sebi.gov.in/filings/public-issues/dec-2022/honasa-consumer-limited-drhp_66770.html,sebi-gov-in,"Public SEBI filing","Honasa Consumer Limited - DRHP (Dec 30, 2022)"
+https://www.sebi.gov.in/sebi_data/attachdocs/oct-2026/1791286434593.pdf,sebi-gov-in,"Public SEBI filing","Sarva Foam Industries Limited - DRHP (Sep 30, 2026)"
+https://www.sebi.gov.in/sebi_data/attachdocs/oct-2024/1729225003827.pdf,sebi-gov-in,"Public SEBI filing","Hyundai Motor India Limited - Prospectus"
+https://www.sebi.gov.in/filings/public-issues/sep-2024/ntpc-green-energy-limited_86875.html,sebi-gov-in,"Public SEBI filing","NTPC Green Energy Limited - Draft Offer Document (Sep 20, 2024)"
+https://www.sebi.gov.in/sebi_data/attachdocs/may-2022/1653979110197.pdf,sebi-gov-in,"Public SEBI filing","Aether Industries Limited - Prospectus (May 27, 2022)"
+https://www.bseindia.com/corporates/download/358332/DRHP_20221010162344.pdf,bseindia-com,"Public SEBI filing","IKIO Lighting Limited - DRHP (Sep 29, 2022)"
+https://business.bofa.com/content/dam/flagship/in/en/investment-banking/Swiggy-Limited-DRHP.pdf,bofa-com,"Public SEBI filing","Swiggy Limited - DRHP (Sep 26, 2024)"
+https://www.sebi.gov.in/sebi_data/attachdocs/sep-2026/1790743844411.pdf,sebi-gov-in,"Public SEBI filing","Iris Global Services Limited - DRHP (Sep 21, 2026)"
+https://www.sebi.gov.in/sebi_data/attachdocs/mar-2023/1678708849713_63.pdf,sebi-gov-in,"Public SEBI filing","Tata Technologies Limited - DRHP (Mar 9, 2023)"
