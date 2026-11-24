@@ -1,6 +1,7 @@
 """Collect your corpus. Four doors, one logbook (data/manifest.jsonl).
 
   uv run python scripts/fetch.py urls                  download every URL in data/sources.csv
+  uv run python scripts/fetch.py urls --refresh       check saved ETags before downloading
   uv run python scripts/fetch.py repo OWNER/REPO ...   a Git repository: clone it, don't crawl it
   uv run python scripts/fetch.py sitemap URL ...       list a site's pages into data/sources.csv
   uv run python scripts/fetch.py manual FOLDER ...     register files you downloaded by hand
@@ -63,7 +64,10 @@ def cmd_urls(args: argparse.Namespace) -> int:
         nonlocal seen
         seen += 1
         if record["status"] == "downloaded":
-            detail = f"{record['bytes'] / 1024:9.1f} kB  {record['path']}"
+            if record.get("http_status") == 304:
+                detail = f"unchanged (ETag)  {record['path']}"
+            else:
+                detail = f"{record['bytes'] / 1024:9.1f} kB  {record['path']}"
         else:
             detail = f"{record.get('error', '')}  {record['url']}"
         print(f"[{seen:>4}] {record['status']:<10} {detail}", flush=True)
@@ -75,6 +79,7 @@ def cmd_urls(args: argparse.Namespace) -> int:
             max_concurrency=args.max_concurrency,
             per_host_delay=args.delay,
             on_result=show,
+            refresh=args.refresh,
         )
     )
     took = time.perf_counter() - started
@@ -220,6 +225,11 @@ def main() -> int:
     )
     urls.add_argument("--delay", type=float, default=0.5, help="seconds between hits on one site")
     urls.add_argument("--limit", type=int, default=0, help="only the first N sources")
+    urls.add_argument(
+        "--refresh",
+        action="store_true",
+        help="check existing downloads using their saved ETags",
+    )
     urls.set_defaults(run=cmd_urls)
 
     repo = doors.add_parser("repo", help="clone the folders you need from a GitHub repository")

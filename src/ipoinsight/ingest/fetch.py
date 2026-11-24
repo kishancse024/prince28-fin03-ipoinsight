@@ -7,6 +7,7 @@ The rules it follows, in order:
    with exponential backoff + jitter, and Retry-After is obeyed.
 4. Write to <name>.part and rename when complete: a killed run never leaves a half file.
 5. One line per file in data/manifest.jsonl, so the next run skips what is already there.
+6. Refresh runs use saved ETags to avoid downloading unchanged files.
 """
 
 import asyncio
@@ -224,9 +225,35 @@ def make_client(max_concurrency: int = 4) -> httpx.AsyncClient:
     )
 
 
-async def _download(client: httpx.AsyncClient, src: Source, root: Path, raw_dir: Path) -> dict:
-    """One attempt. Streams to <name>.part, renames when complete, returns the manifest fields."""
-    async with client.stream("GET", src.url) as response:
+async def _download(
+    client: httpx.AsyncClient,
+    src: Source,
+    root: Path,
+    raw_dir: Path,
+    *,
+    previous: dict | None = None,
+) -> dict:
+    """One attempt. Uses If-None-Match when a previous local copy and ETag exist."""
+    headers = {}
+    previous_path = root / previous["path"] if previous and previous.get("path") else None
+    etag = previous.get("etag") if previous else None
+    if etag and previous_path and previous_path.is_file():
+        headers["If-None-Match"] = etag
+
+    async with client.stream("GET", src.url, headers=headers) as response:
+        if response.status_code == 304:
+            if not previous_path or not previous_path.is_file():
+                raise DownloadError(
+                    "server returned 304 but the previous file is missing", code=304
+                )
+            return {
+                "path": previous["path"],
+                "bytes": previous["bytes"],
+                "sha256": previous["sha256"],
+                "content_type": previous.get("content_type", ""),
+                "etag": response.headers.get("ETag", etag),
+                "http_status": 304,
+            }
         if response.status_code != 200:
             raise DownloadError(
                 f"HTTP {response.status_code}",
@@ -255,6 +282,7 @@ async def _download(client: httpx.AsyncClient, src: Source, root: Path, raw_dir:
         "bytes": size,
         "sha256": digest.hexdigest(),
         "content_type": content_type.split(";")[0].strip(),
+        "etag": response.headers.get("ETag"),
         "http_status": 200,
     }
 
@@ -270,6 +298,7 @@ async def fetch_one(
     slots: asyncio.Semaphore,
     max_attempts: int,
     sleep: Sleep,
+    previous: dict | None = None,
 ) -> dict:
     """Download one source with retries. Always returns a manifest record, never raises."""
     record = {
@@ -290,7 +319,7 @@ async def fetch_one(
             await gate.wait(host, crawl_delay)
             try:
                 async with asyncio.timeout(ATTEMPT_TIMEOUT):
-                    fields = await _download(client, src, root, raw_dir)
+                    fields = await _download(client, src, root, raw_dir, previous=previous)
                 done = {"status": "downloaded", "attempts": attempt, "fetched_at": now_iso()}
                 return record | fields | done
             except DownloadError as exc:
@@ -323,12 +352,20 @@ async def fetch_all(
     client: httpx.AsyncClient | None = None,
     sleep: Sleep = asyncio.sleep,
     on_result: Callable[[dict], None] | None = None,
+    refresh: bool = False,
 ) -> dict[str, int]:
-    """Download every source that is not already done. Returns the counts per status."""
+    """Download missing sources, or conditionally refresh existing files using ETags."""
     raw_dir = root / "data" / "raw"
     manifest = Manifest(root / "data" / "manifest.jsonl")
-    todo = [src for src in sources if not manifest.done(src.url, root)]
-    counts = {"downloaded": 0, "skipped": len(sources) - len(todo), "blocked": 0, "failed": 0}
+    todo = [src for src in sources if refresh or not manifest.done(src.url, root)]
+    counts = {
+        "downloaded": 0,
+        "skipped": len(sources) - len(todo),
+        "blocked": 0,
+        "failed": 0,
+    }
+    if refresh:
+        counts["unchanged"] = 0
     own_client = client is None
     client = client or make_client(max_concurrency)
     robots = Robots(client)
@@ -347,13 +384,17 @@ async def fetch_all(
                     slots=slots,
                     max_attempts=max_attempts,
                     sleep=sleep,
+                    previous=manifest.records.get(src.url) if refresh else None,
                 )
             )
             for src in todo
         ]
         for finished in asyncio.as_completed(tasks):
             record = await finished
-            counts[record["status"]] += 1
+            if record["status"] == "downloaded" and record.get("http_status") == 304:
+                counts["unchanged"] += 1
+            else:
+                counts[record["status"]] += 1
             before = manifest.records.get(record["url"], {})
             same_problem = (before.get("status"), before.get("error")) == (
                 record["status"],

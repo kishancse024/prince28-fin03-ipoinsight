@@ -199,3 +199,10 @@ Sitemap: https://investmentbank.kotak.com/sitemap/sitemap.xml
 ### One thing that went wrong today, and how I fixed it
 
 `dataset_report.py` printed `nothing measurable yet` after downloading because the files on disk weren't sitting at the exact subfolder paths recorded in `data/manifest.jsonl` (`data/raw/<source>/...`) and a stale `.measured.json` cache existed. I verified the files with `pypdf`, moved them into their matching `data/raw/<source>/` folders, removed `.measured.json`, and re-ran `dataset_report.py`.
+
+
+### Your crawl, in numbers
+
+- **SEBI:** 8 unique files — 56.65 MB; **BSE India:** 1 file — 11.06 MB; **Bank of America:** 1 file — 10.65 MB.
+- **Total dataset:** 10 unique documents occupying approximately **78.36 MB** (74.73 MiB).
+- **Retries:** 0 files needed more than one attempt; all 10 completed in a single attempt. The manifest does not record individual download durations, so the slowest site cannot be determined from the available data.

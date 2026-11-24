@@ -49,4 +49,19 @@ The complete list, with a sha256 fingerprint of every file, is `data/manifest.js
 
 ## Known gaps
 
-- (what is still missing from the start target, and why)
+- 2 additional offer documents are required to reach the initial target of 10.
+- Current collection: 8 documents covering 3,360 pages.
+- Target: 10 documents covering approximately 4,000 pages.
+- ICDR Regulations and additional offer documents are pending for the full target of 40+ documents and 15,000+ pages.
+
+
+## Duplicate Detection
+
+Documents were checked using SHA-256 hashes.
+
+- Total documents checked: 10
+- Duplicate groups: 0
+- Extra downloads: 0
+- Detection method: SHA-256 hash comparison across downloaded URLs.
+
+No duplicate files were found.
