@@ -206,3 +206,53 @@ Sitemap: https://investmentbank.kotak.com/sitemap/sitemap.xml
 - **SEBI:** 8 unique files — 56.65 MB; **BSE India:** 1 file — 11.06 MB; **Bank of America:** 1 file — 10.65 MB.
 - **Total dataset:** 10 unique documents occupying approximately **78.36 MB** (74.73 MiB).
 - **Retries:** 0 files needed more than one attempt; all 10 completed in a single attempt. The manifest does not record individual download durations, so the slowest site cannot be determined from the available data.
+
+## D07 · Parser comparison
+
+<!-- parsers:start -->
+| File | Parsers (A / B) | Pages | A found | B found | Time (A / B) | Better, why |
+|---|---|---|---|---|---|---|
+| 1790743844411-60e4b6b9.pdf | PyMuPDF / pypdf | 444 | 1,487,909 chars, 752 headings, 236 tables | 1,355,925 chars, 6 headings, 0 tables | 321.62 s / 245.85 s | PyMuPDF – Extracts more tables and headings. |
+| 1678708849713-63-815583bf.pdf | PyMuPDF / pypdf | 480 | 1,899,579 chars, 2366 headings, 413 tables | 1,737,307 chars, 20 headings, 0 tables | 497.02 s / 103.43 s | PyMuPDF – Preserves more document structure and tables. |
+| drhp-20221010162344-587e27fb.pdf | PyMuPDF / pypdf | 505 | 2,146,822 chars, 964 headings, 483 tables | 1,689,505 chars, 7 headings, 0 tables | 415.25 s / 121.10 s | PyMuPDF – Extracts significantly more tables and headings. |
+| swiggy-limited-drhp-6e11e7db.pdf | PyMuPDF / pypdf | 532 | 2,400,108 chars, 3020 headings, 313 tables | 1,993,101 chars, 30 headings, 0 tables | 388.92 s / 103.06 s | PyMuPDF – Captures more tables and section headings. |
+| 1653979110197-8263105e.pdf | PyMuPDF / pypdf | 399 | 1,710,104 chars, 1618 headings, 340 tables | 1,435,339 chars, 14 headings, 0 tables | 275.50 s / 76.28 s | PyMuPDF – Better extraction of tables and headings. |
+| 1729225003827-6df00a71.pdf | PyMuPDF / pypdf | 476 | 2,324,025 chars, 2568 headings, 280 tables | 1,829,476 chars, 16 headings, 0 tables | 268.57 s / 84.87 s | PyMuPDF – Preserves more tables and document structure. |
+| 1791286434593-e22dc2c3.pdf | PyMuPDF / pypdf | 511 | 2,360,238 chars, 2103 headings, 461 tables | 1,667,600 chars, 6 headings, 0 tables | 343.10 s / 91.18 s | PyMuPDF – Extracts more tables and meaningful headings. |
+| maharashtra-oil-extractions-limited-dap-p-9cc29b | PyMuPDF / pypdf | 13 | 91,688 chars, 20 headings, 14 tables | 49,972 chars, 0 headings, 0 tables | 20.34 s / 3.46 s | PyMuPDF – Finds tables and headings missed by pypdf. |
+| honasa-consumer-limited-drhp-66770-bc7b6fc9.html | trafilatura / strip tags | 1 | 219 chars, 0 headings, 0 tables | 301 chars, 0 headings, 0 tables | 1.35 s / 0.00 s | Needs manual inspection – Compare content relevance and HTML boilerplate. |
+| ntpc-green-energy-limited-86875-c8bb11f0.html | trafilatura / strip tags | 1 | 209 chars, 0 headings, 0 tables | 286 chars, 0 headings, 0 tables | 0.12 s / 0.00 s | Needs manual inspection – Compare content relevance and HTML boilerplate. |
+<!-- parsers:end -->
+
+PyMuPDF was selected for PDF parsing because it extracted significantly more tables and headings than pypdf, preserving useful document structure for IPO analysis. Although pypdf was faster, it missed tables across all tested PDFs. Trafilatura is preferred for HTML when it produces cleaner main-content extraction than simple HTML tag stripping. Manual inspection of representative files is used to validate these results.
+
+
+
+
+### D07 · Parsing my corpus
+
+- Files in the manifest: 10 · parsed: 8 · failed: 0 · pages in Postgres: 3362
+- Parsing coverage: 80 % of files
+
+### Failures by reason
+
+| Reason | Files | What I did |
+|---|---|---|
+| | | |
+
+- The one I fixed: file 1791286434593-e22dc2c3.pdf (database save attempt) , reason database connection closed, fix: committed the read transaction before starting lengthy PDF parsing.
+### What I saw when I read my parsed pages
+
+- A page where the heading path is right (document, page, path): swiggy-limited-drhp-6e11e7db.pdf,444,"data/raw/sebi-gov-in/1790743844411-60e4b6b9.pdf"
+- Something that came out wrong (document, page, what):nothing
+- A table: Markdown grid or loose text? (document, page):nothing
+
+### My parser choice
+
+For PDFs I use PyMuPDF because it found 2,540? tables and substantially more headings than pypdf across the comparison. It found tables in all 8 tested PDFs, while pypdf found zero. PyMuPDF is slower, but preserves more useful structure for IPO analysis.
+
+A kind of document in my corpus that neither parser handles well: HTML pages with very little extracted content
+
+### One thing that went wrong today, and how I fixed it
+
+The PostgreSQL connection closed while saving a parsed PDF after a lengthy parsing operation. I fixed it by committing the initial read transaction before parsing, allowing the database connection to be released and reused when saving the document.
