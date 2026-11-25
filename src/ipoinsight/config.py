@@ -11,18 +11,36 @@ from ipoinsight.db.url import to_asyncpg_url
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
 
     app_name: str = "ipoinsight"
-    # No defaults on purpose: if these are missing, the app refuses to start (fail fast).
     app_env: Literal["local", "ci", "production"]
     database_url: str
+
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"
     data_file: Path = Path("data/sample_records.json")
+    prompts_dir: Path = Path("prompts")
+
     db_pool_size: int = 5
     db_max_overflow: int = 5
-    # The commit this image was built from. CI sets it (Dockerfile ARG GIT_SHA); locally "dev".
+
     git_sha: str = "dev"
+
+    gemini_api_key: str = ""
+    groq_api_key: str = ""
+
+    llm_primary_base_url: str = "https://generativelanguage.googleapis.com/v1beta/openai/"
+    llm_primary_model: str = "gemini-3.8-flash"
+
+    llm_fallback_base_url: str = "https://api.groq.com/openai/v1"
+    llm_fallback_model: str = "openai/gpt-oss-20b"
+
+    llm_timeout_seconds: float = 30.0
+    usd_inr: float = 95.0
 
     @field_validator("database_url")
     @classmethod

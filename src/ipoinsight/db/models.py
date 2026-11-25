@@ -4,11 +4,14 @@ from datetime import date, datetime
 from typing import Any
 
 from sqlalchemy import (
+    Boolean,
     CheckConstraint,
     DateTime,
     ForeignKey,
     Index,
+    Integer,
     MetaData,
+    Numeric,
     String,
     Text,
     UniqueConstraint,
@@ -102,4 +105,29 @@ class ParseFailure(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
+    )
+
+
+class LlmCall(Base):
+    """One row per LLM provider call."""
+
+    __tablename__ = "llm_calls"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    request_id: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    provider: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    model: Mapped[str | None] = mapped_column(String(120), nullable=True)
+    purpose: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    prompt_version: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    status: Mapped[str] = mapped_column(String(20), index=True)
+    error: Mapped[str | None] = mapped_column(Text, nullable=True)
+    tokens_in: Mapped[int] = mapped_column(Integer, server_default="0")
+    tokens_out: Mapped[int] = mapped_column(Integer, server_default="0")
+    latency_ms: Mapped[int] = mapped_column(Integer, server_default="0")
+    cost_inr: Mapped[float] = mapped_column(Numeric(12, 6), server_default="0")
+    fallback_used: Mapped[bool] = mapped_column(Boolean, server_default=text("false"))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        index=True,
     )
