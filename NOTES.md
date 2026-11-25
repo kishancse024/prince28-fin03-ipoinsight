@@ -256,3 +256,41 @@ A kind of document in my corpus that neither parser handles well: HTML pages wit
 ### One thing that went wrong today, and how I fixed it
 
 The PostgreSQL connection closed while saving a parsed PDF after a lengthy parsing operation. I fixed it by committing the initial read transaction before parsing, allowing the database connection to be released and reused when saving the document.
+
+
+
+### D08 · LLM gateway
+
+- Primary: gemini-3.8-flash (Gemini) · fallback: openai/gpt-oss-20b (Groq)
+- First question on my laptop: first words after 33.38 s, total 33.62 s, tokens in 250 / out 228, cost Rs 0.008279
+- Same question on my live URL (second, awake request): first words after ___ s. Day 1 target: under 1.5 s
+
+### Tokens: English against Tamil
+
+| Message | tokens in |
+|---|---|
+| "Hi" (baseline: mostly my system prompt) | 236 |
+|  "Explain in one sentence what a refund is." | 244 |
+| "பணத்தைத் திரும்பப் பெறுதல் என்றால் என்ன என்பதை ஒரே வாக்கியத்தில் விளக்கவும்."| 258 |
+
+- The Tamil message needs about 1.0574 times the tokens of the English one.
+
+### What the model does without my documents
+
+- Question 6 ("Will this IPO list at a premium?"): did it admit it can't know? Its exact words: I am not sure. IPO pricing depends on many factors, and the final listing price is determined by the underwriters and market conditions. For accurate information, check the official offer document or consult a financial professional.
+- A detail it got wrong or invented (question → what it said → what is true):
+- The off-topic question: did it decline in one sentence? Yes, it declined by saying "This question is outside the scope of IPOInsight."
+
+### Fallback and circuit breaker
+
+- With the primary broken: provider groq , fallback YES , first words after 5.18s
+- The question at which "llm call gemini … error" stopped appearing in the log: number 4
+
+### The bill
+
+- /v1/usage today: calls 14 , errors 6 , fallbacks 8 , cost Rs 0.575
+- Average per answered question: Rs 0.0410  (my Day 1 target: under Rs 0.50)
+
+### One thing that went wrong today, and how I fixed
+
+Fixed the missing database table using an Alembic migration and identified a schema mismatch between the LLM gateway and SQLAlchemy model. Worked on adding the missing fields through another migration.
