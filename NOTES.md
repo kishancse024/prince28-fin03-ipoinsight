@@ -294,3 +294,15 @@ The PostgreSQL connection closed while saving a parsed PDF after a lengthy parsi
 ### One thing that went wrong today, and how I fixed
 
 Fixed the missing database table using an Alembic migration and identified a schema mismatch between the LLM gateway and SQLAlchemy model. Worked on adding the missing fields through another migration.
+
+
+### Your p95, from your own table
+
+Measured from successful LLM calls in `llm_calls`.
+
+- **p50 latency:** 2,750 ms (2.75 s)
+- **p95 latency:** 20,903 ms (20.90 s)
+- **Day 1 target:** p95 under 6 seconds
+- **Result:** Not met
+
+The p95 latency is approximately 3.48x above the target.
