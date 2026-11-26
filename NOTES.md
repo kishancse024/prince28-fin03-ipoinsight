@@ -306,3 +306,44 @@ Measured from successful LLM calls in `llm_calls`.
 - **Result:** Not met
 
 The p95 latency is approximately 3.48x above the target.
+
+## D09 · Prompt versions compared
+
+<!-- prompts:start -->
+
+| Prompt version | Correct | Accuracy | Invalid replies | Avg tokens in |
+|---|---|---|---|---|
+| classify_v1 | 12/20 | 60% | 1 | 113 |
+| classify_v2 | 20/20 | 100% | 0 | 278 |
+| classify_v3 | 20/20 | 100% | 0 | 396 |
+| classify_v4 | 20/20 | 100% | 0 | 433 |
+
+<!-- prompts:end -->
+
+
+
+### D09 · Prompts and structured output
+
+- My best router prompt: classify_v4 with 20 / 20
+- What I changed in v4, and what happened to the score:
+- The question my best version still gets wrong (line, wanted, got), and why I think so:
+- A label in my test set that I changed after seeing the results (or "none"):
+- Input tokens per question: v1 ___ , best version ___ . Is the extra accuracy worth it?
+
+### My contract (DocMeta)
+
+- Fields I kept from my project card:
+- Fields I deleted, and why they make no sense per document:
+- The field I tightened, and how:
+
+### Extraction run
+
+- Prompt version: extract_v__ · documents: ___ ok, ___ repaired, ___ failed (of ___ parsed)
+- Not finished? Why, and how many are left:
+- Most common failure reason, and what I did about it:
+- A record that was valid but wrong (document, field, what it said, what is true):
+- Cost at list price: Rs ___ in total, Rs ___ per document
+
+### One thing that went wrong today, and how I fixed it
+
+The llm_calls usage tracking initially failed because the database schema and SQLAlchemy model were out of sync. I added the missing database migration and verified that the expected columns existed. The /v1/usage endpoint subsequently returned HTTP 200 with usage statistics.
