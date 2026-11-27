@@ -325,24 +325,24 @@ The p95 latency is approximately 3.48x above the target.
 ### D09 · Prompts and structured output
 
 - My best router prompt: classify_v4 with 20 / 20
-- What I changed in v4, and what happened to the score:
-- The question my best version still gets wrong (line, wanted, got), and why I think so:
-- A label in my test set that I changed after seeing the results (or "none"):
-- Input tokens per question: v1 ___ , best version ___ . Is the extra accuracy worth it?
+- What I changed in v4, and what happened to the score: From 19/20 to 20/20
+- The question my best version still gets wrong (line, wanted, got), and why I think so:nothing
+- A label in my test set that I changed after seeing the results (or "none"):none
+- Input tokens per question: v1 ≈113, best version ≈422 per successful call. Is the extra accuracy worth it? Yes, if avoiding a classification error is important. The best version uses roughly 3.7 times more input tokens but improved accuracy from 95% to 100%.
 
 ### My contract (DocMeta)
 
-- Fields I kept from my project card:
-- Fields I deleted, and why they make no sense per document:
+- Fields I kept from my project card:everything
+- Fields I deleted, and why they make no sense per document:nothing
 - The field I tightened, and how:
 
 ### Extraction run
 
-- Prompt version: extract_v__ · documents: ___ ok, ___ repaired, ___ failed (of ___ parsed)
-- Not finished? Why, and how many are left:
-- Most common failure reason, and what I did about it:
-- A record that was valid but wrong (document, field, what it said, what is true):
-- Cost at list price: Rs ___ in total, Rs ___ per document
+- Prompt version: `extract_v1` · documents: 10 ok, 2 repaired, 0 failed (of 10 parsed)
+- Not finished? Why, and how many are left: Finished. All 10 eligible parsed HTML/PDF documents were processed; 0 left. The 20 manifest records were excluded because they are not parsed documents.
+- Most common failure reason, and what I did about it: Two documents needed additional validation attempts. The extraction process retried them and successfully produced valid records. The exact validation error needs to be checked in the extraction logs.
+- A record that was valid but wrong (document, field, what it said, what is true): Not yet identified; needs manual verification against the original offer document.
+- Cost at list price: Rs 0.59 in total, Rs 0.06 per document.
 
 ### One thing that went wrong today, and how I fixed it
 
