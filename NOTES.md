@@ -347,3 +347,37 @@ The p95 latency is approximately 3.48x above the target.
 ### One thing that went wrong today, and how I fixed it
 
 The llm_calls usage tracking initially failed because the database schema and SQLAlchemy model were out of sync. I added the missing database migration and verified that the expected columns existed. The /v1/usage endpoint subsequently returned HTTP 200 with usage statistics.
+
+
+### D10 · Queue and worker
+
+- First run: **7 documents queued**, finished in **1,794 s**. Done **7**, skipped **0**, failed **0**.
+- Pace: **256.3 s per document** (INGEST_RPM = **10**, INGEST_CONCURRENCY = **1**).
+
+### Kill test
+
+- Queued: 20. At the kill: queued **15**, running **1**, done **4**, failed **0**.
+- After the new worker: done **20** + skipped **0** + failed **0** = **20**.
+- Documents in the database: **20**, different IDs: **20** (must be equal).
+- The interrupted items came back after **120 s**. Why that long: ARQ retained delayed retry jobs, so the restarted worker waited for their scheduled retry times.
+- Why nothing was doubled (one sentence, in my own words): Stable job IDs prevented duplicate active jobs, and document content hashes prevented the same document from being stored twice.
+
+### Dead-letter list
+
+| Stage (parse / extract / download / gave up) | Items | What I did |
+|---|---|---|
+| None | 0 | No items remained in the dead-letter list; all ingestion jobs completed successfully. |
+
+### Live ingestion
+
+- IPOInsight on Render: **5 of 5 documents done, 0 failed.** The reasons: All five documents were processed successfully without permanent ingestion errors.
+- A request without the token gets status **401**.
+
+### Week 2 against Monday's estimate
+
+- docs/CAPACITY.md said: **3,360 pages, 3,379,917 tokens**. docs/INGEST_REPORT.md says: **3,362 pages, 3,604,387 tokens**.
+- The difference: **2 additional pages and 224,470 additional tokens (6.64%)**. The actual corpus contained more extracted text than the original estimate because the initial estimate used a limited sample and the 4-characters-per-token approximation.
+
+### One thing that went wrong today, and how I fixed it
+
+The worker encountered `asyncpg.InterfaceError: connection is closed` while inserting a document after lengthy PDF parsing and LLM calls. I changed the processing flow to commit and release database connections before long-running parsing and external LLM operations. I restarted the worker, and all 10 canonical ingestion items eventually completed successfully.
